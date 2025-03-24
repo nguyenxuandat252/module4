@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:replace="~{layout/layout::library}"></th:block>
+</head>
+<body>
+<form action="/student/search" method="get">
+    <input name="keyword">
+    <button>Search</button>
+</form>
+<th:block th:replace="~{layout/layout::header}"></th:block>
+<a href="student/add">Add</a>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Function</th>
+    </tr>
+    <tr th:each="student: ${studentList}">
+        <td th:text="${student.id}"></td>
+        <td th:text="${student.name}"></td>
+        <td th:switch="${student.gender}">
+            <span th:case="true" th:text="${'Male'}"></span>
+            <span th:case="false" th:text="${'Female'}"></span>
+        </td>
+        <td th:text="${student.score}"></td>
+        <td><a th:href="@{student/detail(id=${student.id})}">Detail1</a></td>
+        <td><a th:href="@{student/detail/__${student.id}__}">Detail2</a></td>
+        <td><a th:href="@{student/edit/__${student.id}__}">Edit</a></td>
+        <td><a th:href="@{student/delete/__${student.id}__}">Delete</a></td>
+
+    </tr>
+</table>
+<h1 th:text="#{test}"></h1>
+<th:block th:replace="~{layout/layout::footer}"></th:block>
+</body>
+</html>

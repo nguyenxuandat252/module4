@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+</head>
+<body>
+ID:
+<span th:text="${student.id}"></span><br>
+Name:
+<span th:text="${student.name}"></span><br>
+Gender:
+<span th:if="${student.gender}" th:text="${'male'}"></span>
+<span th:if="${!student.gender}" th:text="${'female'}"></span><br>
+Score:
+<span th:text="${student.score}"></span><br>
+</body>
+</html>
