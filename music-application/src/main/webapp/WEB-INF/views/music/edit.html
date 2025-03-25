@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/musicList/edit" method="post" th:object="${music}">
+    <span>ID: <input th:field="*{id}"></span>
+    <span>Name: <input th:field="*{name}"></span>
+    <span>Artist Name: <input th:field="*{artistName}"></span>
+    <span>Aategory: <input th:field="*{category}"></span>
+    <span>Url: <input th:field="*{url}"></span>
+    <input type="submit" value="Update">
+</form>
+</body>
+</html>

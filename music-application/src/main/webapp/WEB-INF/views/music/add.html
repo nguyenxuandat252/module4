@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/musicList/add" method="post" th:object="${music}">
+    ID: <input type="hidden" th:field="*{id}"><br>
+    Name: <input type="text" th:field="*{name}"><br>
+    ArtistName: <input type="text" name="artistName" th:field="*{artistName}">
+    Category: <input type="text" name="category" th:field="*{category}">
+    Url: <input type="text" name="url" th:field="*{url}">
+    <input type="submit" value="Add">
+</form>
+</body>
+</html>

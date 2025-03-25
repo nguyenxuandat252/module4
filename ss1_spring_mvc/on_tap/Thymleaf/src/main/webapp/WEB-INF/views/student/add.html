@@ -7,7 +7,7 @@
 <body>
 <form action="/student/add" method="post" th:object="${student}">
     ID: <input type="text" th:field="*{id}"><br>
-    Name: <input type="text" th:field="*{id}"><br>
+    Name: <input type="text" th:field="*{name}"><br>
     Gender: <input type="radio" value="true" th:field="*{gender}">Male
     <input type="radio" value="false" th:field="*{gender}">Female<br>
     Score: <input type="text" name="score" th:field="*{score}">
