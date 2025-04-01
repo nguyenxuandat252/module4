@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Đăng ký người dùng</title>
+</head>
+<body>
+<h2>Đăng ký tài khoản</h2>
+<form action="/user/register" method="post" th:object="${userDTO}">
+  <label for="username">Tên đăng nhập:</label>
+  <input type="text" id="username" name="username" required th:field="*{username}"><br>
+
+  <label for="password">Mật khẩu:</label>
+  <input type="password" id="password" name="password" required th:field="*{password}"><br>
+
+  <button type="submit">Đăng ký</button>
+</form>
+
+<p th:text="${message}"></p>
+</body>
+</html>

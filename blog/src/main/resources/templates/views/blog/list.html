@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/list/search" method="get">
+  <input name="name" type="text">
+  <button>Search</button>
+</form>
+<a href="/list/add">Add</a>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>CodeBlog</th>
+    <th>Content</th>
+    <th>Times</th>
+    <th>ID_Author</th>
+    <th>Code_Author</th>
+    <th>Name_Author</th>
+  </tr>
+  <tr th:each="blogDto,status:${blogDtoPage.content}">
+    <td th:text="${blogDto.blogId}"></td>
+    <td th:text="${blogDto.blogCode}"></td>
+    <td th:text="${blogDto.content}"></td>
+    <td th:text="${blogDto.createTime}"></td>
+    <td th:text="${blogDto.authorId}"></td>
+    <td th:text="${blogDto.authorCode}"></td>
+    <td th:text="${blogDto.authorName}"></td>
+  </tr>
+</table>
+<a th:if="${blogDtoPage.hasPrevious()}" th:href="@{/list/search(page=${blogDtoPage.number -1})}">Pre</a>
+<span th:text="${blogDtoPage.number +1}"></span>/<span th:text="${blogDtoPage.totalPages}"></span>
+<a th:if="${blogDtoPage.hasNext()}" th:href="@{/list/search(page=${blogDtoPage.number +1})}">Next</a>
+</body>
+</html>

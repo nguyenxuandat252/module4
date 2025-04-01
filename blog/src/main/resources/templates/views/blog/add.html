@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/list/add}" method="post" th:object="${blogDto}">
+  ID: <input type="hidden" th:field="*{blogId}"><br>
+  Code Blog: <input type="text" th:field="*{blogCode}"><br>
+  Content: <input type="text" th:field="*{content}"><br>
+  Create Time: <input type="datetime-local" th:field="*{createTime}">
+  IdAuthor: <input type="hidden" th:field="*{authorId}">
+  Author Code: <input type="text" th:field="*{authorCode}">
+  Author name: <input type="text" th:field="*{authorName}">
+  <button>Save</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Register Form</title>
+</head>
+<body>
+<form id="registerForm" action="/user/register" method="post" th:object="${user}">
+  <label>Tên đăng nhập: </label>
+  <input id="username" type="text" name="username" required th:field="*{username}" onchange="validateUsername()"><br>
+  <p id="errorUsernameRegister"></p>
+  <label>Mật khẩu: </label>
+  <input id="password" type="password" name="password" required th:field="*{password}"
+         onchange="validatePassword()"><br>
+  <p id="errorPasswordRegister"></p>
+  <label>Nhập lại mật khẩu: </label>
+  <input id="confirmPassword" type="password" required onchange="validateConfirmPassword()"><br>
+  <p id="errorConfirmPassword"></p>
+  <input type="submit" value="Register">
+</form>
+<script>
+  document.getElementById("registerForm").addEventListener("submit", function (event) {
+    if (!validateForm()) {
+      event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu nếu dữ liệu không hợp lệ
+    }
+  });
+
+  function validateForm() {
+    let isValid = true;
+    if (!validateUsername()) isValid = false;
+    if (!validatePassword()) isValid = false;
+    if (!validateConfirmPassword()) isValid = false;
+    return isValid;
+  }
+
+  function validateUsername() {
+    let username = document.getElementById("username").value;
+    let errorUsernameRegister = document.getElementById("errorUsernameRegister");
+    errorUsernameRegister.textContent = "";
+    if (!/^[a-zA-Z][a-zA-Z0-9]*$/.test(username)) {
+      errorUsernameRegister.textContent = "Ký tự đầu tiên phải là chữ, không được dùng ký tự đặc biệt!";
+      errorUsernameRegister.style.color = "red";
+      return false;
+    }
+    if (username.length < 5 || username.length > 20) {
+      errorUsernameRegister.textContent = "Tên đăng nhập có độ dài từ 5-20 ký tự!";
+      errorUsernameRegister.style.color = "red";
+      return false;
+    }
+    return true;
+  }
+
+  function validatePassword() {
+    let password = document.getElementById("password").value;
+    let errorPasswordRegister = document.getElementById("errorPasswordRegister");
+    errorPasswordRegister.textContent = "";
+    if (!/[a-zA-Z0-9]*$/.test(password)) {
+      errorPasswordRegister.textContent = "Mật khẩu không được dùng ký tự đặc biệt!";
+      errorPasswordRegister.style.color = "red";
+      return false;
+    }
+    if (password.length < 8 || password.length > 20) {
+      errorPasswordRegister.textContent = "Mật khẩu có độ dài từ 8-20 ký tự!";
+      errorPasswordRegister.style.color = "red";
+      return false;
+    }
+    return true;
+  }
+
+  function validateConfirmPassword() {
+    let password = document.getElementById("password").value;
+    let confirmPassWord = document.getElementById("confirmPassword").value;
+    let errorConfirmPassword = document.getElementById("errorConfirmPassword");
+    errorConfirmPassword.textContent = "";
+    if (password !== confirmPassWord) {
+      errorConfirmPassword.textContent = "Mật khẩu bạn vừa nhập không trùng khớp!";
+      errorConfirmPassword.style.color = "red";
+      return false;
+    }
+
+    return true;
+  }
+</script>
+</body>
+</html>
