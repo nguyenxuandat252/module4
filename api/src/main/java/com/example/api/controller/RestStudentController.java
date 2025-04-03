@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/v1/students")
 public class RestStudentController {
     private IStudentService studentService;
@@ -56,9 +57,9 @@ public class RestStudentController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> put(@RequestBody Student student){
-        studentService.updateStudent(student);
-        if(studentService.updateStudent(student)==null){
+    public ResponseEntity<?> put(@RequestBody StudentDto studentDto){
+        studentService.updateStudent(studentDto);
+        if(studentService.updateStudent(studentDto)==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

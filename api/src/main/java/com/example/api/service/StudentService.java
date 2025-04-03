@@ -34,16 +34,21 @@ public class StudentService implements IStudentService{
     }
 
     @Override
-    public Student updateStudent(Student student) {
-        Student student1 = studentRepository.getStudentById(student.getId());
-        if(student1==null){
+    public Student updateStudent(StudentDto studentDto) {
+        Student student = studentRepository.getStudentById(studentDto.getId());
+        if(student==null){
             return null;
         }
-        student1.setCode(student.getCode());
-        student1.setName(student.getName());
-        student1.setAge(student.getAge());
-        student1.setScore(student.getScore());
-        return studentRepository.save(student1);
+        student.setCode(student.getCode());
+        student.setName(student.getName());
+        student.setAge(student.getAge());
+        student.setScore(student.getScore());
+        if(studentDto.getClassEntity().getId()>0){
+            student.setClassEntity(studentDto.getClassEntity());
+        }else {
+            throw new RuntimeException("Class not found with ID: " + studentDto.getClassEntity().getId());
+        }
+        return studentRepository.save(student);
     }
 
     @Override
