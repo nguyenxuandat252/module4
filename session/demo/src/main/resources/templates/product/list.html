@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách sản phẩm</title>
+</head>
+<body>
+<h2>DANH SÁCH SẢN PHẨM</h2>
+<div class="product-list">
+  <div class="product" th:each="product : ${products}" style="display: flex">
+    <div class="product-card" >
+      <div class="ribbon" th:if="${product.isNew}">NEW!</div>
+      <img th:src="@{${product.urlImg}}" th:alt="${product.name}">
+      <a th:href="@{/products/detail/__${product.id}__}"><h3 th:text="${product.name}"></h3></a>
+      <p>
+        <s><span class="old-price" th:if="${product.oldPrice > 0}" th:text="${#numbers.formatInteger(product.oldPrice, 3, 'COMMA') + ' đ'}"></span></s>
+        <span class="new-price" th:text="${#numbers.formatInteger(product.newPrice, 3, 'COMMA') + ' đ'}"></span>
+      </p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

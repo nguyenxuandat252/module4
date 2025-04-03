@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr th:each = "entry:${cart.productMap.entrySet()}">
+        <td><img th:src="@{${entry.key.urlImg}}" width="50">
+            <span th:text="${entry.key.name}"></span><br>
+           Mã sản phẩm <span th:text="${entry.key.code}"></span><br>
+           Đơn giá <span th:text="${entry.key.newPrice}"></span><br>
+           Số lượng: <span th:text="${entry.value}"></span>
+           Tổng tiền : <span th:text="${entry.value*entry.getKey().newPrice}"></span>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
