@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/search}" method="get">
+    <label>Danh sách từ: </label>
+    <input name="fromDate" type="date">
+    <label>đến: </label>
+    <input name="toDate" type="date">
+    <button>Tìm kiếm</button>
+</form>
+<table>
+    <tr>
+        <th>STT</th>
+        <th>Mã đơn hàng</th>
+        <th>Tên sản phẩm</th>
+        <th>Giá</th>
+        <th>Loại Sản phẩm</th>
+        <th>Ngày mua</th>
+        <th>Số lượng</th>
+        <th>Tổng tiền</th>
+        <th>Actior</th>
+    </tr>
+    <tr th:each="orderDetail, iterStat : ${orderDetailList.content}">
+        <td th:text="${iterStat.index + 1}"></td>
+        <td th:text="${orderDetail.id}"></td>
+        <td th:text="${orderDetail.product.name}"></td>
+        <td th:text="${orderDetail.product.price}"></td>
+        <td th:text="${orderDetail.product.category.name}"></td>
+        <td th:text="${orderDetail.orders.dateBuy}"></td>
+        <td th:text="${orderDetail.quantity}"></td>
+        <td th:text="${orderDetail.quantity*orderDetail.product.price}"></td>
+        <td><a th:href="@{/update/{id}(id=${orderDetail.id})}">Sửa</a></td>
+    </tr>
+</table>
+<a th:if="${orderDetailList.hasPrevious()}" th:href="@{/search(page=${orderDetailList.number - 1})}">Pre</a>
+<span th:text="${orderDetailList.number + 1}"></span>/<span th:text="${orderDetailList.totalPages}"></span>
+<a th:if="${orderDetailList.hasNext()}" th:href="@{/search(page=${orderDetailList.number + 1})}">Next</a>
+</body>
+</html>

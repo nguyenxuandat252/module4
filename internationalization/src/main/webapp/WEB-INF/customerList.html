@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Document</title>
+  <style>
+    select {
+      padding: 5px;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    a {
+      display: inline-block;
+      padding: 8px 12px;
+      margin-top: 10px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    a:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Form đổi ngôn ngữ -->
+<form method="get" th:action="@{''}">
+  <select name="lang" onchange="this.form.submit()">
+    <option value="en" th:selected="${#locale.language == 'en'}">🇬🇧 English</option>
+    <option value="vi" th:selected="${#locale.language == 'vi'}">🇻🇳 Tiếng Việt</option>
+  </select>
+</form>
+
+<!-- Tiêu đề -->
+<h1 th:text="#{customer.list.title}">Customer List</h1>
+
+<!-- Bảng danh sách khách hàng -->
+<table>
+  <tr>
+    <th th:text="#{customer.name}">Name</th>
+    <th th:text="#{customer.email}">Email</th>
+    <th th:text="#{customer.edit}">Edit</th>
+    <th th:text="#{customer.delete}">Delete</th>
+  </tr>
+</table>
+
+<!-- Nút thêm khách hàng -->
+<a th:href="@{/customer/add}" th:text="#{customer.add}">Add New Customer</a>
+
+</body>
+</html>

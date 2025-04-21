@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form>
+    <label>Loại sản phẩm: </label>
+    <select th:field="*{orderDetailDto.product.category.id}">
+        <option th:each="category: ${categoryList}" th:value="${category.id}" th:text="${category.name}"></option>
+    </select>
+    <label>Loại sản phẩm: </label>
+    <select th:field="*{orderDetailDto.product.id}">
+        <option th:each="product: ${productList}" th:value="${product.id}" th:text="${product.name}"></option>
+    </select>
+    <label>Ngày mua</label>
+    <input type="date" th:field="*{orderDetailDto.orders.dateBuy}">
+    <input type="number" th:field="*{orderDetailDto.quantity}">
+    <button>update</button>
+</form>
+</body>
+</html>

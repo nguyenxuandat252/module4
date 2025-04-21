@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .modal-backdrop {
+            z-index: 1040;
+        }
+        .modal {
+            z-index: 1050;
+        }
+    </style>
+</head>
+<body>
+<div id="studentDetailModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chi tiết sinh viên</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="studentDetailContent">
+                <!-- Nội dung sẽ được load bằng AJAX -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<form th:action="@{/search}" method="get">
+    <input name="name" type="text" th:value="${name}">
+    <input name="minPoint" type="number" step="any" th:value="${name}">
+    <select name="classId">
+        <option th:value="null">---Chọn lớp---</option>
+        <option th:each="class: ${listClassName}" th:text="${class.name}" th:value="${classId}"></option>
+    </select>
+    <button>Tìm kiếm</button>
+</form>
+<a href="/create">Thêm mới</a>
+<form th:action="@{/delete}" method="post">
+    <table>
+        <tr>
+            <th>STT</th>
+            <th>Tên</th>
+            <th>Điểm</th>
+            <th>Lớp</th>
+            <th>Chọn</th>
+            <th>Thao tác</th>
+        </tr>
+        <tr th:each="student, iterStat : ${listStudent.content}">
+            <td th:text="${iterStat.index + 1}"></td>
+            <td th:text="${student.name}"></td>
+            <td th:text="${student.point}"></td>
+            <td th:text="${student.studentClass.name}"></td>
+            <td><input type="checkbox" name="studentIds" th:value="${student.id}"></td>
+            <td>
+                <a th:href="@{/update/{id}(id=${student.id})}">Sửa</a>
+                <!--            <a th:href="@{/delete/{id}(id=${student.id})}">Xóa</a>-->
+                <a href="#" class="detail-link"
+                   th:data-id="${student.id}"
+                   th:attr="data-id=${student.id}">Chi tiết</a>
+            </td>
+        </tr>
+    </table>
+    <a th:if="${listStudent.hasPrevious()}" th:href="@{/search(page=${listStudent.number - 1},name= ${name},minPoint=${minPoint},classId=${classId})}">Pre</a>
+    <span th:text="${listStudent.number + 1}"></span>/<span th:text="${listStudent.totalPages}"></span>
+    <a th:if="${listStudent.hasNext()}" th:href="@{/search(page=${listStudent.number + 1},name= ${name},minPoint=${minPoint},classId=${classId})}">Next</a>
+    <button>Xóa</button>
+</form>
+<script>
+    $(document).ready(function() {
+        // Xử lý khi click vào link chi tiết
+        $('.detail-link').click(function(e) {
+            e.preventDefault();
+            var studentId = $(this).data('id');
+
+            // Gọi AJAX
+            $.ajax({
+                url: '/detail/' + studentId,
+                type: 'GET',
+                success: function(student) {
+                    // Xây dựng nội dung modal
+                    var content = `
+                    <p><strong>ID:</strong> ${student.id}</p>
+                    <p><strong>Tên:</strong> ${student.name}</p>
+                    <p><strong>Điểm:</strong> ${student.point}</p>
+                    <p><strong>Lớp:</strong> ${student.studentClass.name}</p>
+                `;
+
+                    $('#studentDetailContent').html(content);
+                    $('#studentDetailModal').modal('show');
+                },
+                error: function() {
+                    alert('Không thể tải thông tin sinh viên');
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

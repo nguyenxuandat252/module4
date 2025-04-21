@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/create}" method="post" th:object="${studentDto}">
+    <input type="hidden" th:field="*{id}">
+    <label>Tên: </label>
+    <input type="text" th:field="*{name}">
+    <small style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small><br>
+
+    <label>Điểm: </label>
+    <input type="text" th:field="*{point}">
+    <small style="color: red" th:if="${#fields.hasErrors('point')}" th:errors="*{point}"></small><br>
+
+    <label>Lớp: </label>
+    <select th:field="*{studentClass.id}">
+        <option th:each="class: ${listClassName}" th:value="${class.id}" th:text="${class.name}"></option>
+    </select>
+    <small style="color: red" th:if="${#fields.hasErrors('studentClass.id')}" th:errors="*{studentClass.id}"></small><br>
+    <button>Thêm</button>
+</form>
+
+</body>
+</html>
